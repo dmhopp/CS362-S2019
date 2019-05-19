@@ -18,9 +18,9 @@
 
 char inputChar()
 {
-    // TODO: rewrite this function
-	int randI = (rand() % 95) + 32;
-	char randC = randI;
+	char inputPool[] = "[({ ax})]";
+	int randI = rand() % 9;
+	char randC = inputPool[randI];
 	return randC;
 }
 
@@ -31,7 +31,6 @@ char inputChar()
 
 char *inputString()
 {
-    // TODO: rewrite this function
 	char randS[STR_LEN];
 	char inputPool[] = "reset";
 	int i;
