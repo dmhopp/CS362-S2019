@@ -774,6 +774,20 @@ int refactorSeaHag(struct gameState *state){
       return 0;
 }
 
+int refactorVillage(struct gameState *state, int handPos) {
+	int currentPlayer = whoseTurn(state);
+
+	//+1 Card
+      drawCard(currentPlayer, state);
+			
+      //+2 Actions
+      state->numActions = state->numActions + 2;
+			
+      //discard played card from hand
+      discardCard(handPos, currentPlayer, state, 0);
+      return 0;
+}
+
 //ASSIGN2 BUG: Even though the refactored function returns the correct value, the function called under the switch case is not returned. Therefore the return value is not relayed. See cardEffect function for BUG.
 int refactorGardens(){
       return -1;
@@ -978,7 +992,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;*/
 		
     case village:
-      //+1 Card
+      /*//+1 Card
       drawCard(currentPlayer, state);
 			
       //+2 Actions
@@ -986,7 +1000,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 			
       //discard played card from hand
       discardCard(handPos, currentPlayer, state, 0);
-      return 0;
+      return 0;*/
+	return refactorVillage(state, handPos);
 		
     case baron:
       state->numBuys++;//Increase buys by 1!
