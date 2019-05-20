@@ -41,13 +41,13 @@ void check_refactorSmithy(struct gameState *post, int handPos, int player, int *
 	//confirm function is not broken
 	assert(result == 0);
 
-	//Test player adds 2 cards to hand and discards Smithy card
-	if(assertTest(pre->handCount[player] + 2 - 1, post->handCount[player]) == -1) {
+	//Test player adds 3 cards to hand and discards Smithy card
+	if(assertTest(pre->handCount[player] + 3 - 1, post->handCount[player]) == -1) {
 		(*test1Fail)++;
 	}
 	
-	//Test deck has decremented by 2
-	if(assertTest(pre->deckCount[player] - 2, post->deckCount[player]) == -1) {
+	//Test deck has decremented by 3
+	if(assertTest(pre->deckCount[player] - 3, post->deckCount[player]) == -1) {
 		(*test2Fail)++;
 	}
 	
@@ -113,13 +113,13 @@ int main() {
 
 	//Report on testing results
 	if(test1Fail > 0)
-		printf("Testing if 2 cards added to hand, 1 card discarded, failed %i times out of %i.\n", test1Fail, NUM_TESTS);
+		printf("Testing if 3 cards added to hand, 1 card discarded, failed %i times out of %i.\n", test1Fail, NUM_TESTS);
 	else
-		printf("Testing if 2 cards added to hand, 1 card removed, test passed.\n");
+		printf("Testing if 3 cards added to hand, 1 card removed, test passed.\n");
 	if(test2Fail > 0)
-		printf("Testing if 2 cards taken from deck, failed %i times out of %i.\n", test2Fail, NUM_TESTS);
+		printf("Testing if 3 cards taken from deck, failed %i times out of %i.\n", test2Fail, NUM_TESTS);
 	else
-		printf("Testing if 2 cards taken from deck, test passed.\n");
+		printf("Testing if 3 cards taken from deck, test passed.\n");
 	if(test3Fail > 0)
 		printf("Testing if 1 card added to discard, failed %i times out of %i.\n", test3Fail, NUM_TESTS);
 	else
