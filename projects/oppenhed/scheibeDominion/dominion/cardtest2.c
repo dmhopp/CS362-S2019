@@ -21,7 +21,8 @@ void assertTest(int, int, char*, int*);
 int main() {
 
         //Construct & init game
-        int players = 2;
+        int handPos = 0, choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
+	int players = 2;
         int k[10] = {adventurer, smithy, village, great_hall, council_room, feast, gardens, minion, steward, mine};
         int seed = 10;
         struct gameState G;
@@ -58,7 +59,8 @@ int main() {
 	//Gtest.handCount[0] = 1;
 
         //Execute refactored adventurer function
-	refactorAdventurer(&Gtest);
+	cardEffect(adventurer, choice1, choice2, choice3, &Gtest, handPos, &bonus);
+	//refactorAdventurer(&Gtest);
 
 	//Testing
 	assertTest(2, Gtest.deckCount[0], "Error: incorrect deck count.", &flag);
@@ -84,7 +86,9 @@ int main() {
         //G.handCount[0] = 1;
 
         //Execute refactored adventurer function
-        refactorAdventurer(&G);
+	choice1 = 0, choice2 = 0, choice3 = 0, handPos = 0, bonus = 0;
+	cardEffect(adventurer, choice1, choice2, choice3, &G, handPos, &bonus);
+        //refactorAdventurer(&G);
 
         //Testing
         assertTest(7, G.discardCount[0], "Error: incorrect discard count.", &flag);
@@ -105,9 +109,9 @@ int main() {
 
 void assertTest(int eval, int aval, char* msg, int* flag) {
         if(eval != aval) {
-                if(flag == 0) {
-                        aval = aval - 2;
-                }
+                //if(flag == 0) {
+                //        aval = aval - 2;
+                //}
                 printf("FAIL:  %s (expected = %i, actual = %i)\n", msg, eval, aval);
                 *flag = 1;
         }

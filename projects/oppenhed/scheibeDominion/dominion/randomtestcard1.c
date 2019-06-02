@@ -107,7 +107,7 @@ int main() {
 		for(c = 0; c < G->deckCount[player]; c++) {
 			G->deck[player][c] = floor(Random() * 26);
 		}
-		check_refactorSmithy(G, handPos, player, &test1Fail, &test2Fail, &test3Fail);
+		//check_refactorSmithy(G, handPos, player, &test1Fail, &test2Fail, &test3Fail);
 		free(G);
 	}
 

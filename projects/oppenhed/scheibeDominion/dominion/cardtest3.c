@@ -21,7 +21,8 @@ void assertTest(int, int, char*, int*);
 int main() {
 
         //Construct & init game
-        int players = 3;
+        int handPos = 0, choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
+	int players = 3;
         int k[10] = {adventurer, smithy, village, great_hall, council_room, feast, gardens, minion, steward, mine};
         int seed = 10;
         struct gameState G;
@@ -37,7 +38,8 @@ int main() {
         memcpy(&Gtest, &G, sizeof(struct gameState));
 
         //Execute refactored sea_hag function
-        refactorSeaHag(&Gtest);
+	cardEffect(sea_hag, choice1, choice2, choice3, &Gtest, handPos, &bonus);
+        //refactorSeaHag(&Gtest);
 
         //Check for errors
 	assertTest(whoseTurn(&Gtest), whoseTurn(&G), "Error: incorrect player turn.", &flag);
@@ -69,9 +71,9 @@ int main() {
 
 void assertTest(int eval, int aval, char* msg, int* flag) {
         if(eval != aval) {
-                if(flag == 0) {
-                        aval = aval - 2;
-                }
+                //if(flag == 0) {
+                //        aval = aval - 2;
+                //}
                 printf("FAIL:  %s (expected = %i, actual = %i)\n", msg, eval, aval);
                 *flag = 1;
         }

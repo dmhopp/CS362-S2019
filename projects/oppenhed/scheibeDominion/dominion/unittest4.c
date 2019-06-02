@@ -50,6 +50,6 @@ int main() {
 void assertTest(int eval, int aval, char* msg, int* flag) {
         if(eval != aval) {
                 printf("FAIL:  %s (expected = %i, actual = %i)\n", msg, eval, aval);
-		*flag++;
+		*flag = 1;
 	}
 }

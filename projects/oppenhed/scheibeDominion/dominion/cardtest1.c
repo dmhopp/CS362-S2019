@@ -21,6 +21,7 @@ void assertTest(int, int, char*, int*);
 int main() {
 	
 	//Construct & init game
+	int handPos = 0, choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
         int players = 2;
         int k[10] = {adventurer, smithy, village, great_hall, council_room, feast, gardens, minion, steward, mine};
         int seed = 10;
@@ -32,13 +33,13 @@ int main() {
 	//Testing
 	int flag = 0;
 	printf("TESTING %s\n", TEST);
-	int handPos = 0;
 
 	//copy game state to test case
 	memcpy(&Gtest, &G, sizeof(struct gameState));
 	
 	//Execute refactored smithy function
-	refactorSmithy(&Gtest, handPos);
+	cardEffect(smithy, choice1, choice2, choice3, &Gtest, handPos, &bonus);
+	//refactorSmithy(&Gtest, handPos);
 	
 	//Check for errors
 	assertTest(G.handCount[0] + 2, Gtest.handCount[0], "Error: incorrect hand count.", &flag);
@@ -64,9 +65,9 @@ int main() {
 
 void assertTest(int eval, int aval, char* msg, int* flag) {
         if(eval != aval) {
-		if(flag == 0) {
-			aval = aval - 2;
-		}
+		//if(flag == 0) {
+		//	aval = aval - 2;
+		//}
                 printf("FAIL:  %s (expected = %i, actual = %i)\n", msg, eval, aval);
                 *flag = 1;
         }
