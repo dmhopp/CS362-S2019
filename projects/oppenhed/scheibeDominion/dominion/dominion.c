@@ -759,10 +759,14 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     {
     case adventurer:
     	adventurerEffect(state, drawntreasurePtr, currentPlayerPtr, cardDrawnPtr, temphandPtr, zPtr);
-			
+	//ADDED
+	return 0;
+		
     case council_room:
     	council_roomEffect(state, currentPlayerPtr, handPos);
-			
+	//ADDED
+	return 0;
+		
     case feast:
       //gain card with cost up to 5
       //Backup hand
@@ -882,9 +886,13 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 		
     case smithy:
       smithyEffect(state, currentPlayerPtr, handPos);
-		
+	//ADDED
+	return 0;
+
     case village:
     	villageEffect(state, currentPlayerPtr, handPos);
+	//ADDED
+	return 0;
 
     case baron:
       state->numBuys++;//Increase buys by 1!
@@ -1176,6 +1184,9 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 		
     case embargo: 
     	embargoEffect(state, currentPlayerPtr, handPos, choice1);
+	//ADDED
+	return 0;
+
       //+2 Coins
 /*      state->coins = state->coins + 2;
 			
