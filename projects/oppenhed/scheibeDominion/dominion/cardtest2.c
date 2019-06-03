@@ -39,8 +39,8 @@ int main() {
 	
 	//Manipulate starting deck and hand
 	Gtest.deck[0][0] = estate;
-	Gtest.deck[0][1] = silver;
-	Gtest.deck[0][2] = gold;
+	Gtest.deck[0][1] = gold;
+	Gtest.deck[0][2] = silver;
 	Gtest.deck[0][3] = estate;
 	Gtest.deck[0][4] = copper;
 	Gtest.deck[0][5] = estate;
@@ -67,7 +67,7 @@ int main() {
 	assertTest(3, Gtest.discardCount[0], "Error: incorrect discard count.", &flag);
 	assertTest(6, Gtest.handCount[0], "Error: incorrect hand count.", &flag);
 	assertTest(copper, Gtest.hand[0][Gtest.handCount[0]-2], "Error: incorrect treasure type.", &flag);
-	assertTest(gold, Gtest.hand[0][Gtest.handCount[0]-1], "Error: incorrect treasure type.", &flag);
+	assertTest(silver, Gtest.hand[0][Gtest.handCount[0]-1], "Error: incorrect treasure type.", &flag);
 	
 	//Manipulate starting deck and hand
         G.deck[0][0] = estate;
@@ -77,13 +77,18 @@ int main() {
         G.deck[0][4] = estate;
         G.deck[0][5] = estate;
         G.deckCount[0] = 6;
-        G.discardCount[0] = 0;
+	G.discard[0][0] = estate;
+	G.discard[0][1] = estate;
+	G.discard[0][2] = estate;
+	G.discard[0][3] = estate;
+	G.discard[0][4] = estate;
+        G.discardCount[0] = 5;
 
-        for(i = 0; i < 5; i++) {
+        for(i = 0; i < 4; i++) {
                 G.hand[0][i] = estate;
         }
         G.hand[0][4] = adventurer;
-        //G.handCount[0] = 1;
+        G.handCount[0] = 5;
 
         //Execute refactored adventurer function
 	choice1 = 0, choice2 = 0, choice3 = 0, handPos = 0, bonus = 0;
@@ -91,7 +96,7 @@ int main() {
         //refactorAdventurer(&G);
 
         //Testing
-        assertTest(7, G.discardCount[0], "Error: incorrect discard count.", &flag);
+        assertTest(12, G.discardCount[0], "Error: incorrect discard count.", &flag);
         assertTest(4, G.handCount[0], "Error: incorrect hand count.", &flag);
 
 

@@ -643,7 +643,39 @@ int getCost(int cardNumber)
   return -1;
 }
 
-int adventurerEffect(struct gameState *state, int *drawntreasurePtr, int *currentPlayerPtr, int *cardDrawnPtr, int temphandPtr[], int *zPtr){
+int adventurerEffect(struct gameState *state){
+      int drawntreasure = 0;
+      int currentPlayer = whoseTurn(state);
+      int temphand[MAX_HAND];
+      int z = 0;
+      int cardDrawn;
+
+      while(drawntreasure<2){
+	//if the deck is empty we need to shuffle discard and add to deck
+        if (state->deckCount[currentPlayer] <1){
+	  shuffle(currentPlayer, state);
+	}
+	drawCard(currentPlayer, state);
+	//top card of hand is most recently drawn card.
+        cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];
+	if (cardDrawn == copper || cardDrawn == gold || cardDrawn == gold)
+	  drawntreasure++;
+	else{
+	  temphand[z]=cardDrawn;
+          //this should just remove the top card (the most recently drawn one).
+          state->handCount[currentPlayer]--;
+	  z++;
+	}
+      }
+      while(z-1>=0){ //ORIGINAL: while(z-1>=0)
+	// discard all cards in play that have been drawn
+        state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; 	
+        z=z-1;
+      }
+      return 0;
+}
+
+/*int adventurerEffect(struct gameState *state, int *drawntreasurePtr, int *currentPlayerPtr, int *cardDrawnPtr, int temphandPtr[], int *zPtr){
      while(*drawntreasurePtr<2){
 	if (state->deckCount[*currentPlayerPtr] <1){//if the deck is empty we need to shuffle discard and add to deck
 	  shuffle(*currentPlayerPtr, state);
@@ -663,7 +695,7 @@ int adventurerEffect(struct gameState *state, int *drawntreasurePtr, int *curren
 	*zPtr=*zPtr-1;
       }
       return 0;
-}
+}*/
 
 int smithyEffect(struct gameState *state, int *currentPlayerPtr, int handPos){
       //+3 Cards 
@@ -758,7 +790,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
-    	adventurerEffect(state, drawntreasurePtr, currentPlayerPtr, cardDrawnPtr, temphandPtr, zPtr);
+    	adventurerEffect(state);
+	//adventurerEffect(state, drawntreasurePtr, currentPlayerPtr, cardDrawnPtr, temphandPtr, zPtr);
 	//ADDED
 	return 0;
 		

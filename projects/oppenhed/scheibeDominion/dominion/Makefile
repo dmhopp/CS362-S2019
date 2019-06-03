@@ -69,54 +69,58 @@ unittestresults: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 car
 	
 	echo "Results for unittest1: " >> unittestresults.out
 	./unittest1 >> unittestresults.out
-	gcov -b -f dominion.c >> unittestresults.out
+	gcov -b -f dominion.c | grep -A4 whoseTurn >> unittestresults.out
 	
 	echo "Results for unittest2: " >> unittestresults.out
 	./unittest2 >> unittestresults.out
-	gcov -b -f dominion.c >> unittestresults.out
+	gcov -b -f dominion.c | grep -A4 fullDeckCount >> unittestresults.out
+	echo >> unittestresults.out
 	
 	echo "Results for unittest3: " >> unittestresults.out
 	./unittest3 >> unittestresults.out
-	gcov -b -f dominion.c >> unittestresults.out
+	gcov -b -f dominion.c | grep -A4 discardCard >> unittestresults.out
+	echo >> unittestresults.out
 	
 	echo "Results for unittest4: " >> unittestresults.out
 	./unittest4 >> unittestresults.out
-	gcov -b -f dominion.c >> unittestresults.out
+	gcov -b -f dominion.c | grep -A4 isGameOver >> unittestresults.out
+	echo >> unittestresults.out
 	
 	echo "Results for cardtest1: " >> unittestresults.out
 	./cardtest1 >> unittestresults.out
-	gcov -b -f dominion.c >> unittestresults.out
+	gcov -b -f dominion.c | grep -A4 smithyEffect >> unittestresults.out
+	echo >> unittestresults.out
 	
 	echo "Results for cardtest2: " >> unittestresults.out
 	./cardtest2 >> unittestresults.out
-	gcov -b -f dominion.c >> unittestresults.out
+	gcov -b -f dominion.c | grep -A4 adventurerEffect >> unittestresults.out
+	echo >> unittestresults.out
 	
 	echo "Results for cardtest3: " >> unittestresults.out
 	./cardtest3 >> unittestresults.out
-	gcov -b -f dominion.c >> unittestresults.out
+	gcov -b -f dominion.c | grep -A4 cardEffect >> unittestresults.out
+	echo >> unittestresults.out
 	
 	echo "Results for cardtest4: " >> unittestresults.out
 	./cardtest4 >> unittestresults.out
-	gcov -b -f dominion.c >> unittestresults.out
+	gcov -b -f dominion.c | grep -A4 villageEffect >> unittestresults.out
+	echo >> unittestresults.out
 
 randomtestresults: randomtestadventurer randomtestcard1 randomtestcard2
 
 	echo "Results for randomtestadventurer: " >> randomtestresults.out
 	./randomtestadventurer >> randomtestresults.out
-	gcov -b -f dominion.c >> randomtestresults.out
-	#gcov -b -f dominion.c | grep -A4 refactorAdventurer >> randomtestresults.out
+	gcov -b -f dominion.c | grep -A4 adventurerEffect >> randomtestresults.out
 	echo >> randomtestresults.out
 
 	echo "Results for randomtestcard1: " >> randomtestresults.out
 	./randomtestcard1 >> randomtestresults.out
-	gcov -b -f dominion.c >> randomtestresults.out
-	#gcov -b -f dominion.c | grep -A4 refactorSmithy >> randomtestresults.out
+	gcov -b -f dominion.c | grep -A4 smithyEffect >> randomtestresults.out
 	echo >> randomtestresults.out
 
 	echo "Results for randomtestcard2: " >> randomtestresults.out
 	./randomtestcard2 >> randomtestresults.out
-	gcov -b -f dominion.c >> randomtestresults.out
-	#gcov -b -f dominion.c | grep -A4 refactorVillage >> randomtestresults.out
+	gcov -b -f dominion.c | grep -A4 villageEffect >> randomtestresults.out
 	echo >> randomtestresults.out
 
 	echo "dominion.c.gcov: " >> randomtestresults.out

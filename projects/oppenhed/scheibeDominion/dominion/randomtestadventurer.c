@@ -30,16 +30,15 @@ int assertTest(int eval, int aval) {
 void check_refactorAdventurer(struct gameState *post, int handPos, int player, int *test1Fail, int *test2Fail, int *test3Fail, int *test4Fail, int *test5Fail) {
 	
 	//copy original game state post to pre for later comparison
-	//struct gameState *pre = malloc(sizeof(struct gameState));
-	struct gameState pre;
-	memcpy(&pre, post, sizeof(struct gameState));
+	struct gameState *pre = malloc(sizeof(struct gameState));
+	memcpy(pre, post, sizeof(struct gameState));
 
 	//Run function
 	int result;
 	int bonus = 0;
-	result = cardEffect(adventurer, 0, 0, 0, post, handPos, &bonus);
+	result = cardEffect(adventurer, -1, -1, -1, post, handPos, &bonus);
 	
-	/*//confirm function is not broken
+	//confirm function is not broken
 	assert(result == 0);
 	
 	//Test: if 1+ treasure card(s) in pre deck/discard...
@@ -126,15 +125,14 @@ void check_refactorAdventurer(struct gameState *post, int handPos, int player, i
 		(*test5Fail)++;
 	}
 	
-	//free(pre);
-*/
+	free(pre);
 }
 
 int main() {
 	
 	//int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
 	
-	struct gameState G;
+	struct gameState *G;
 
 	printf("------------Testing %s-------------\n", TEST);
 
@@ -155,33 +153,36 @@ int main() {
 	int player;
 	int handPos;
 	for(n = 0; n < NUM_TESTS; n++) {
-		//G = malloc(sizeof(struct gameState));
+		G = malloc(sizeof(struct gameState));
 		for(i = 0; i < sizeof(struct gameState); i++) {
 			//assign each game state byte to random val
-			((char*)&G)[i] = floor(Random() * 256);
+			((char*)G)[i] = floor(Random() * 256);
 		}
 		//refine variables to within preconditions
 		//randomize players
 		numPlayers = floor(Random() * MAX_PLAYERS);
 		player = floor(Random() * numPlayers);
-		G.whoseTurn = player;
+		G->whoseTurn = player;
 		//randomize discard
-		G.discardCount[player] = floor(Random() * MAX_DECK);
-		G.playedCardCount = 0;
+		G->discardCount[player] = floor(Random() * MAX_DECK);
+		int c;
+		for(c = 0; c < G->discardCount[player]; c++) {
+			G->discard[player][c] = floor(Random() * 26);
+		}
+		G->playedCardCount = 0;
 		//randomize hand
-		G.handCount[player] = floor(Random() * MAX_HAND);
-		handPos = floor(Random() * G.handCount[player]);
-		//int c;
-		/*for(c = 0; c < G.handCount[player]; c++) {
-			G.hand[player][c] = floor(Random() * 26);
-		}*/
+		G->handCount[player] = floor(Random() * MAX_HAND);
+		handPos = floor(Random() * G->handCount[player]);
+		for(c = 0; c < G->handCount[player]; c++) {
+			G->hand[player][c] = floor(Random() * 26);
+		}
 		//randomize deck
-		G.deckCount[player] = floor(Random() * MAX_DECK);
-		/*for(c = 0; c < G.deckCount[player]; c++) {
-			G.deck[player][c] = floor(Random() * 26);
-		}*/
-		check_refactorAdventurer(&G, handPos, player, &test1Fail, &test2Fail, &test3Fail, &test4Fail, &test5Fail);
-		//free(G);
+		G->deckCount[player] = floor(Random() * MAX_DECK);
+		for(c = 0; c < G->deckCount[player]; c++) {
+			G->deck[player][c] = floor(Random() * 26);
+		}
+		check_refactorAdventurer(G, handPos, player, &test1Fail, &test2Fail, &test3Fail, &test4Fail, &test5Fail);
+		free(G);
 	}
 
 	//Report on testing results
