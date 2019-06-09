@@ -125,9 +125,39 @@ protected void setUp() {
       }
    }
 
-   public void testAAAA() {
+   public void test_student_ALLOW_ALL_SCHEMES_withSchemes() {
+       String[] schemes = {"http","https"};
+       UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.ALLOW_ALL_SCHEMES);
+       assertTrue(urlValidator.isValid("http://domain.com"));
+       assertTrue(urlValidator.isValid("https://domain.com"));
+       assertTrue(urlValidator.isValid("notInSchemesArray://domain.com"));
+   }
+
+   public void test_student_ALLOW_ALL_SCHEMES_withEmptySchemes() {
+       String[] schemes = {};
+       UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.ALLOW_ALL_SCHEMES);
+       assertTrue(urlValidator.isValid("http://domain.com"));
+       assertTrue(urlValidator.isValid("https://domain.com"));
+       assertTrue(urlValidator.isValid("notInSchemesArray://domain.com"));
+   }
+
+   public void test_student_List() {
        UrlValidator urlValidator = new UrlValidator();
-       assertTrue(urlValidator.isValid("http://google.com"));
+       assertTrue(urlValidator.isValid("http://domain.com"));
+       assertTrue(urlValidator.isValid("https://domain.com"));
+       assertFalse(urlValidator.isValid("notInSchemesArray://domain.com"));
+       assertFalse(urlValidator.isValid("http://domain.com\\"));
+       assertFalse(urlValidator.isValid("http://domain.com\\path"));
+       assertTrue(urlValidator.isValid("http://domain.com/path"));
+       assertTrue(urlValidator.isValid("http://domain.com/path/"));
+       assertFalse(urlValidator.isValid("http://domain.com/path//"));
+       assertFalse(urlValidator.isValid("://domain.com/path/"));
+       assertFalse(urlValidator.isValid("http://domain.zzzzzzzzzzzz/path/"));
+       assertFalse(urlValidator.isValid("http://domain.___/path/"));
+       assertFalse(urlValidator.isValid("http://domain./path/"));
+       assertTrue(urlValidator.isValid("http://domain.com/path/?"));
+       assertTrue(urlValidator.isValid("http://domain.com?"));
+       assertFalse(urlValidator.isValid("http://domain.?"));
    }
 
    public void testValidator202() {
