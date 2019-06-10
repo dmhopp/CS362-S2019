@@ -413,8 +413,9 @@ public class UrlValidator implements Serializable {
                 if (!inetAddressValidator.isValidInet6Address(ipv6)) {
                     return false;
                 }
-        } else {
-            String hostLocation = authorityMatcher.group(PARSE_AUTHORITY_HOST_IP);
+        } 
+        else {
+        	String hostLocation = authorityMatcher.group(PARSE_AUTHORITY_HOST_IP);
             // check if authority is hostname or IP address:
             // try a hostname first since that's much more likely
             DomainValidator domainValidator = DomainValidator.getInstance(isOn(ALLOW_LOCAL_URLS));
