@@ -14,7 +14,7 @@ public class UrlValidatorRandomTests extends TestCase {
 		super(name);
 	}
 	
-	private static final int TEST_COUNT = 100;
+	private static final int TEST_COUNT = 10000;
 	
 	private static final RandomUrlGenerator randomUrlGenerator = new RandomUrlGenerator();
 	
