@@ -18,7 +18,7 @@
 import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collections;
+//import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -270,16 +270,22 @@ public class UrlValidator implements Serializable {
         this.options = options;
 
         if (isOn(ALLOW_ALL_SCHEMES)) {
+<<<<<<< HEAD
         	//BUG: cannot add to empty set, empty set should be immutable for good practice reasons
         	//allowedSchemes = new HashSet<String>(0);
         	//allowedSchemes.add(schemes[0].toLowerCase(Locale.ENGLISH));
         	allowedSchemes = Collections.emptySet();
         } 
         else {
+=======
+            allowedSchemes = null;
+        } else {
+>>>>>>> a28acd6bc67521a39429f7bf62606eb289b6d212
             if (schemes == null) {
                 schemes = DEFAULT_SCHEMES;
             }
             
+<<<<<<< HEAD
             //BUG: initial capacity is less than 0, should be size of schemes string array
             //allowedSchemes = new HashSet<String>(-1);
             allowedSchemes = new HashSet<String>(schemes.length);
@@ -290,6 +296,12 @@ public class UrlValidator implements Serializable {
             //}
             for(int i = 0; i < schemes.length; i++) {
             	allowedSchemes.add(schemes[i].toLowerCase(Locale.ENGLISH));
+=======
+            allowedSchemes = new HashSet<String>(schemes.length);
+            
+            for(int i=0; i < schemes.length; i++) {
+                allowedSchemes.add(schemes[i].toLowerCase(Locale.ENGLISH));
+>>>>>>> a28acd6bc67521a39429f7bf62606eb289b6d212
             }
         }
 

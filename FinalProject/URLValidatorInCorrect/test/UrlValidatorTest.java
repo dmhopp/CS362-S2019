@@ -125,6 +125,41 @@ protected void setUp() {
       }
    }
 
+   public void test_student_ALLOW_ALL_SCHEMES_withSchemes() {
+       String[] schemes = {"http","https"};
+       UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.ALLOW_ALL_SCHEMES);
+       assertTrue(urlValidator.isValid("http://domain.com"));
+       assertTrue(urlValidator.isValid("https://domain.com"));
+       assertTrue(urlValidator.isValid("notInSchemesArray://domain.com"));
+   }
+
+   public void test_student_ALLOW_ALL_SCHEMES_withEmptySchemes() {
+       String[] schemes = {};
+       UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.ALLOW_ALL_SCHEMES);
+       assertTrue(urlValidator.isValid("http://domain.com"));
+       assertTrue(urlValidator.isValid("https://domain.com"));
+       assertTrue(urlValidator.isValid("notInSchemesArray://domain.com"));
+   }
+
+   public void test_student_List() {
+       UrlValidator urlValidator = new UrlValidator();
+       assertTrue(urlValidator.isValid("http://domain.com"));
+       assertTrue(urlValidator.isValid("https://domain.com"));
+       assertFalse(urlValidator.isValid("notInSchemesArray://domain.com"));
+       assertFalse(urlValidator.isValid("http://domain.com\\"));
+       assertFalse(urlValidator.isValid("http://domain.com\\path"));
+       assertTrue(urlValidator.isValid("http://domain.com/path"));
+       assertTrue(urlValidator.isValid("http://domain.com/path/"));
+       assertFalse(urlValidator.isValid("http://domain.com/path//"));
+       assertFalse(urlValidator.isValid("://domain.com/path/"));
+       assertFalse(urlValidator.isValid("http://domain.zzzzzzzzzzzz/path/"));
+       assertFalse(urlValidator.isValid("http://domain.___/path/"));
+       assertFalse(urlValidator.isValid("http://domain./path/"));
+       assertTrue(urlValidator.isValid("http://domain.com/path/?"));
+       assertTrue(urlValidator.isValid("http://domain.com?"));
+       assertFalse(urlValidator.isValid("http://domain.?"));
+   }
+
    public void testValidator202() {
        String[] schemes = {"http","https"};
        UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.NO_FRAGMENTS);
@@ -334,14 +369,14 @@ protected void setUp() {
     static boolean incrementTestPartsIndex(int[] testPartsIndex, Object[] testParts) {
       boolean carry = true;  //add 1 to lowest order part.
       boolean maxIndex = true;
-      for (int testPartsIndexIndex = testPartsIndex.length; testPartsIndexIndex >= 0; --testPartsIndexIndex) {
+      for (int testPartsIndexIndex = testPartsIndex.length-1; testPartsIndexIndex >= 0; --testPartsIndexIndex) {
           int index = testPartsIndex[testPartsIndexIndex];
          ResultPair[] part = (ResultPair[]) testParts[testPartsIndexIndex];
          maxIndex &= (index == (part.length - 1));
          
          if (carry) {
             if (index < part.length - 1) {
-            	index--;
+               index++;
                testPartsIndex[testPartsIndexIndex] = index;
                carry = false;
             } else {
