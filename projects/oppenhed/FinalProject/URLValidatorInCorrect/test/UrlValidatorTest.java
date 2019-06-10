@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import junit.framework.Test;
 import junit.framework.TestCase;
 
 /**
@@ -37,7 +38,7 @@ protected void setUp() {
          testPartsIndex[index] = 0;
       }
    }
-
+   
    public void testIsValid() {
         testIsValid(testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES);
         setUp();
@@ -341,7 +342,9 @@ protected void setUp() {
          
          if (carry) {
             if (index < part.length - 1) {
-            	index--;
+            	//BUG: should increment not decrement
+            	//index--;
+            	index++;
                testPartsIndex[testPartsIndexIndex] = index;
                carry = false;
             } else {
